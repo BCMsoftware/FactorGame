@@ -6,5 +6,4 @@ Rule:
 
 It's a funny math game.
 
-You can read the log file after playing with the computer, and you can think of how to beat it.
-But prehaps you won't win. 
+You can read the log file after playing, and you can think of how to win.
