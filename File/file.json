@@ -1,22 +1,42 @@
 [
     {
-        "name": "v1.0_console.exe",
-        "path": "./v1.0_console/main.exe",
+        "name": "FG (HUMAN VS HUMAN)",
+        "path": "./v1.1/Game.zip",
+        "icon": "fab fa-windows",
+        "platform": "Windows",
+        "version": "1.1",
+        "size": "23.8 MB",
+        "date": "2025-06-01",
+        "description": "Played FG with Human"
+    },
+    {
+        "name": "FG (HUMAN VS HUMAN) code",
+        "path": "./v1.1/Source.zip",
+        "icon": "devicon-python-plain",
+        "platform": "Python 3.12",
+        "version": "1.1",
+        "size": "12.9 MB",
+        "date": "2025-06-01",
+        "description": "Played FG with Human"
+    },
+    {
+        "name": "FG (AI VS HUMAN)",
+        "path": "./v1.0/main.exe",
         "icon": "fab fa-windows",
         "platform": "Windows",
         "version": "1.0",
         "size": "1.85 MB",
         "date": "2025-06-01",
-        "description": "Factor Game only computer"
+        "description": "Played FG with AI"
     },
     {
-        "name": "v1.0_console_code.cpp",
-        "path": "./v1.0_console/main.cpp",
+        "name": "FG (AI VS HUMAN) code",
+        "path": "./v1.0/main.cpp",
         "icon": "devicon-cplusplus-plain",
-        "platform": "Cpp",
+        "platform": "C++ 14",
         "version": "1.0",
         "size": "7 KB",
         "date": "2025-06-01",
-        "description": "Factor Game only computer"
+        "description": "Played FG with AI"
     }
 ]
