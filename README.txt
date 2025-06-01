@@ -1,4 +1,5 @@
 Factor Game
+Copyrights(C) BCMsoftware. All rights reserved.
 
 It's a funny math game.
 

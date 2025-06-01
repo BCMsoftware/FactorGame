@@ -3,14 +3,675 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Factor Game - 因子游戏</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --accent: #f1c40f;
+            --dark: #0a192f;
+            --light: #e0f7fa;
+            --card-bg: rgba(10, 25, 47, 0.85);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            width: 100%;
+            position: relative;
+            padding: 20px;
+        }
+
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .lang-btn {
+            background: var(--card-bg);
+            color: var(--accent);
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            padding: 8px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lang-btn:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            flex-direction: column;
+        }
+
+        .logo-icon {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(52, 152, 219, 0.7);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #7fdbff;
+            margin-bottom: 20px;
+            max-width: 800px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .intro {
+            font-size: 1.2rem;
+            color: var(--light);
+            max-width: 800px;
+            line-height: 1.7;
+            margin: 0 auto 40px;
+            text-align: center;
+            background: rgba(0, 30, 60, 0.5);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        .option-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(52, 152, 219, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+
+        .option-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+
+        .option-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .option-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .option-description {
+            font-size: 1.1rem;
+            color: #b3e0f2;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background: linear-gradient(135deg, var(--primary), #2980b9);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 220px;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, #2980b9, var(--primary));
+        }
+
+        .btn i {
+            margin-right: 10px;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, var(--secondary), #27ae60);
+        }
+
+        .btn-download:hover {
+            background: linear-gradient(135deg, #27ae60, var(--secondary));
+        }
+
+        .btn-source {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+
+        .btn-source:hover {
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        }
+
+        .btn-readme {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .btn-readme:hover {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            width: 100%;
+            color: #7fdbff;
+            font-size: 1.1rem;
+            border-top: 1px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .copyright {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        .math-elements {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.2;
+            z-index: -1;
+            color: var(--light);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            overflow: auto;
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #0a192f, #1a2a6c);
+            width: 90%;
+            max-width: 800px;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            background: rgba(10, 25, 47, 0.9);
+            padding: 20px;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(241, 196, 15, 0.3);
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: #e74c3c;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #ff6b6b;
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 30px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .readme-content {
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 20, 40, 0.7);
+            border-radius: 10px;
+            padding: 25px;
+            line-height: 1.7;
+            color: #e0f7fa;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            white-space: pre-wrap;
+            overflow-x: auto;
+            max-height: 60vh;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .language-switcher {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 10px;
+            }
+            
+            .modal-body {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .logo-icon {
+                font-size: 3rem;
+            }
+            
+            .option-card {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+            
+            .readme-content {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Factor Game website</h1>
-    <h1>What do you want do?</h1>
-    <a href="./HTML5/index.html">Play Factor Game online</a><br>
-    <a href="./CPP/main.exe" download="FactorGame.exe">Install Factor Game for windows</a><br>
-    <a href="./CPP/main.cpp" download="FactorGame.cpp">Get Factor File source file</a><br>
-    <a href="./README.txt">Read README.TXT</a>
+    <!-- Floating math elements -->
+    <div class="math-elements" style="top: 10%; left: 5%;">∛</div>
+    <div class="math-elements" style="top: 20%; right: 10%;">π</div>
+    <div class="math-elements" style="top: 40%; left: 15%;">∫</div>
+    <div class="math-elements" style="top: 60%; right: 20%;">∑</div>
+    <div class="math-elements" style="top: 80%; left: 10%;">√</div>
+    <div class="math-elements" style="top: 30%; right: 5%;">∞</div>
+    
+    <!-- Modal for README -->
+    <div class="modal" id="readmeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Factor Game Documentation</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="readme-content" id="readmeContent">
+                    <!-- README content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="language-switcher">
+            <button class="lang-btn" id="langToggle">
+                <i class="fas fa-globe"></i>
+                <span id="langText">English</span>
+            </button>
+        </div>
+        
+        <header>
+            <div class="logo">
+                <i class="fas fa-calculator logo-icon"></i>
+                <h1 id="mainTitle">Factor Game</h1>
+            </div>
+            <p class="subtitle" id="subtitle">A Mathematical Strategy Game Based on Number Factors</p>
+            
+            <div class="intro" id="introText">
+                <p>Factor Game is an exciting mathematical challenge where players take turns subtracting factors from a starting number. The player who cannot make a move loses!</p>
+                <p>Test your strategic thinking and mathematical skills in this captivating game of numbers and factors.</p>
+            </div>
+        </header>
+        
+        <div class="action-section">
+            <h2 class="section-title" id="sectionTitle">What would you like to do?</h2>
+            
+            <div class="options-grid">
+                <div class="option-card">
+                    <i class="fas fa-gamepad option-icon"></i>
+                    <h3 class="option-title" id="playTitle">Play Online</h3>
+                    <p class="option-description" id="playDesc">Experience Factor Game directly in your browser. No downloads required - just pure mathematical fun!</p>
+                    <a href="./HTML5/index.html" class="btn">
+                        <i class="fas fa-play"></i> <span id="playBtn">Play Now</span>
+                    </a>
+                </div>
+                
+                <div class="option-card">
+                    <i class="fas fa-download option-icon"></i>
+                    <h3 class="option-title" id="downloadTitle">Download for Windows</h3>
+                    <p class="option-description" id="downloadDesc">Get the full Factor Game experience with our standalone Windows application. Play offline anytime!</p>
+                    <a href="./CPP/main.exe" download="FactorGame.exe" class="btn btn-download">
+                        <i class="fas fa-download"></i> <span id="downloadBtn">Download Game</span>
+                    </a>
+                </div>
+                
+                <div class="option-card">
+                    <i class="fas fa-code option-icon"></i>
+                    <h3 class="option-title" id="sourceTitle">Get Source Code</h3>
+                    <p class="option-description" id="sourceDesc">Interested in how Factor Game works? Download the C++ source code and explore the game logic.</p>
+                    <a href="./CPP/main.cpp" download="FactorGame.cpp" class="btn btn-source">
+                        <i class="fas fa-file-code"></i> <span id="sourceBtn">Download Source</span>
+                    </a>
+                </div>
+                
+                <div class="option-card">
+                    <i class="fas fa-book option-icon"></i>
+                    <h3 class="option-title" id="docsTitle">Read Documentation</h3>
+                    <p class="option-description" id="docsDesc">Learn about the game rules, strategies, and how to make the most of your Factor Game experience.</p>
+                    <button class="btn btn-readme" id="readmeBtn">
+                        <i class="fas fa-book-open"></i> <span id="docsBtn">Read README</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p class="copyright">Copyrights(C) BCMsoftware. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // 多语言支持
+        const translations = {
+            en: {
+                mainTitle: "Factor Game",
+                subtitle: "A Mathematical Strategy Game Based on Number Factors",
+                intro: "<p>Factor Game is an exciting mathematical challenge where players take turns subtracting factors from a starting number. The player who cannot make a move loses!</p><p>Test your strategic thinking and mathematical skills in this captivating game of numbers and factors.</p>",
+                sectionTitle: "What would you like to do?",
+                playTitle: "Play Online",
+                playDesc: "Experience Factor Game directly in your browser. No downloads required - just pure mathematical fun!",
+                playBtn: "Play Now",
+                downloadTitle: "Download for Windows",
+                downloadDesc: "Get the full Factor Game experience with our standalone Windows application. Play offline anytime!",
+                downloadBtn: "Download Game",
+                sourceTitle: "Get Source Code",
+                sourceDesc: "Interested in how Factor Game works? Download the C++ source code and explore the game logic.",
+                sourceBtn: "Download Source",
+                docsTitle: "Read Documentation",
+                docsDesc: "Learn about the game rules, strategies, and how to make the most of your Factor Game experience.",
+                docsBtn: "Read README",
+                langText: "中文",
+                modalTitle: "Factor Game Documentation"
+            },
+            zh: {
+                mainTitle: "因子游戏",
+                subtitle: "一个基于数字因子策略的数学游戏",
+                intro: "<p>因子游戏是一个刺激的数学挑战游戏，玩家轮流从一个起始数字中减去其因子。无法进行操作的玩家输掉游戏！</p><p>在这个引人入胜的数字与因子游戏中测试您的战略思维和数学技能。</p>",
+                sectionTitle: "您想要做什么？",
+                playTitle: "在线游戏",
+                playDesc: "直接在浏览器中体验因子游戏。无需下载 - 纯粹的数学乐趣！",
+                playBtn: "立即游戏",
+                downloadTitle: "下载Windows版",
+                downloadDesc: "获取完整的因子游戏体验，使用我们的独立Windows应用程序。随时随地离线游戏！",
+                downloadBtn: "下载游戏",
+                sourceTitle: "获取源代码",
+                sourceDesc: "对因子游戏的工作原理感兴趣？下载C++源代码并探索游戏逻辑。",
+                sourceBtn: "下载源码",
+                docsTitle: "阅读文档",
+                docsDesc: "了解游戏规则、策略以及如何充分利用您的因子游戏体验。",
+                docsBtn: "阅读说明",
+                langText: "English",
+                modalTitle: "因子游戏文档"
+            }
+        };
+        
+        // 初始语言设置
+        let currentLang = 'en';
+        
+        // DOM元素
+        const modal = document.getElementById('readmeModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const readmeBtn = document.getElementById('readmeBtn');
+        const readmeContent = document.getElementById('readmeContent');
+        const modalTitle = document.getElementById('modalTitle');
+        
+        // 更新页面内容
+        function updateContent() {
+            document.getElementById('mainTitle').textContent = translations[currentLang].mainTitle;
+            document.getElementById('subtitle').textContent = translations[currentLang].subtitle;
+            document.getElementById('introText').innerHTML = translations[currentLang].intro;
+            document.getElementById('sectionTitle').textContent = translations[currentLang].sectionTitle;
+            document.getElementById('playTitle').textContent = translations[currentLang].playTitle;
+            document.getElementById('playDesc').textContent = translations[currentLang].playDesc;
+            document.getElementById('playBtn').textContent = translations[currentLang].playBtn;
+            document.getElementById('downloadTitle').textContent = translations[currentLang].downloadTitle;
+            document.getElementById('downloadDesc').textContent = translations[currentLang].downloadDesc;
+            document.getElementById('downloadBtn').textContent = translations[currentLang].downloadBtn;
+            document.getElementById('sourceTitle').textContent = translations[currentLang].sourceTitle;
+            document.getElementById('sourceDesc').textContent = translations[currentLang].sourceDesc;
+            document.getElementById('sourceBtn').textContent = translations[currentLang].sourceBtn;
+            document.getElementById('docsTitle').textContent = translations[currentLang].docsTitle;
+            document.getElementById('docsDesc').textContent = translations[currentLang].docsDesc;
+            document.getElementById('docsBtn').textContent = translations[currentLang].docsBtn;
+            document.getElementById('langText').textContent = translations[currentLang].langText;
+            modalTitle.textContent = translations[currentLang].modalTitle;
+        }
+        
+        // 切换语言
+        document.getElementById('langToggle').addEventListener('click', function() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            updateContent();
+        });
+        
+// 打开README模态框
+readmeBtn.addEventListener('click', function() {
+    // 显示模态框
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    
+    // 显示加载状态
+    readmeContent.textContent = currentLang === 'en' 
+        ? 'Loading documentation...' 
+        : '正在加载文档...';
+    
+    // 从README.txt文件中读取内容
+    fetch('./README.txt')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(text => {
+            // 成功读取文件后显示内容
+            readmeContent.textContent = text;
+        })
+        .catch(error => {
+            // 如果读取失败，显示错误信息
+            console.error('Error fetching README:', error);
+            readmeContent.textContent = currentLang === 'en' 
+                ? 'Failed to load documentation. Please check the README.txt file.' 
+                : '加载文档失败。请检查README.txt文件。';
+        });
+    });
+        
+        // 关闭模态框
+        closeModalBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        // 点击模态框外部关闭
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // 初始化页面
+        updateContent();
+    </script>
 </body>
 </html>
