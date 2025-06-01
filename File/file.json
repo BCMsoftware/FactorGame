@@ -1,6 +1,6 @@
 [
     {
-        "name": "FG (HUMAN VS HUMAN)",
+        "name": "FG (HUMAN VS HUMAN).zip",
         "path": "./v1.1/Game.zip",
         "icon": "fab fa-windows",
         "platform": "Windows",
@@ -10,7 +10,7 @@
         "description": "Played FG with Human"
     },
     {
-        "name": "FG (HUMAN VS HUMAN) code",
+        "name": "FG (HUMAN VS HUMAN) code.zip",
         "path": "./v1.1/Source.zip",
         "icon": "devicon-python-plain",
         "platform": "Python 3.12",
@@ -20,7 +20,7 @@
         "description": "Played FG with Human"
     },
     {
-        "name": "FG (AI VS HUMAN)",
+        "name": "FG (AI VS HUMAN).exe",
         "path": "./v1.0/main.exe",
         "icon": "fab fa-windows",
         "platform": "Windows",
@@ -30,7 +30,7 @@
         "description": "Played FG with AI"
     },
     {
-        "name": "FG (AI VS HUMAN) code",
+        "name": "FG (AI VS HUMAN) code.cpp",
         "path": "./v1.0/main.cpp",
         "icon": "devicon-cplusplus-plain",
         "platform": "C++ 14",
