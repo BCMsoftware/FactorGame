@@ -1,3 +1,4 @@
+//Copyrights(C) BCMsoftware. All rights reserved.
 //Written by XiaoDan on 2025/5/30 - 2025/5/31
 //-std-C++14 -O2
 
@@ -96,11 +97,12 @@ string msg_pt = "This FactorGame played on ";
 string msg_el = "Entry a language: ";
 string msg_fle = "Error:Unable to find this language file.\n";
 
-string msg_welcome = "Welcone to FactorGame!\n\n";
+string msg_welcome = "Welcone to FactorGame!\n";
+string msg_cp = "Copyrights(C) BCMsoftware. All rights reserved.";
 
 void init(){
-	cout<<msg_welcome;
-
+	cout<<msg_welcome<<msg_cp<<"\n\n";
+	
 	string input;
 
 	cout<<msg_ename;
