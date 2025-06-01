@@ -1,0 +1,22 @@
+[
+    {
+        "name": "v1.0_console.exe",
+        "path": "./v1.0_console/main.exe",
+        "icon": "fab fa-windows",
+        "platform": "Windows",
+        "version": "1.0",
+        "size": "1.85 MB",
+        "date": "2025-06-01",
+        "description": "Factor Game only computer"
+    },
+    {
+        "name": "v1.0_console_code.cpp",
+        "path": "./v1.0_console/main.cpp",
+        "icon": "devicon-cplusplus-plain",
+        "platform": "Cpp",
+        "version": "1.0",
+        "size": "7 KB",
+        "date": "2025-06-01",
+        "description": "Factor Game only computer"
+    }
+]
