@@ -101,11 +101,17 @@
             flex-direction: column;
         }
 
-        .logo-icon {
-            font-size: 4rem;
-            color: var(--primary);
+        /* 修改后的Logo样式 */
+        .logo-image {
+            width: 100px; /* 调整Logo大小 */
+            height: 100px;
             margin-bottom: 15px;
-            text-shadow: 0 0 15px rgba(52, 152, 219, 0.7);
+            filter: drop-shadow(0 0 15px rgba(52, 152, 219, 0.7)); /* 添加发光效果 */
+            transition: transform 0.3s ease;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.1) rotate(5deg); /* 悬停动画效果 */
         }
 
         h1 {
@@ -422,6 +428,12 @@
             .modal-body {
                 padding: 15px;
             }
+            
+            /* 移动端调整Logo大小 */
+            .logo-image {
+                width: 80px;
+                height: 80px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -429,8 +441,9 @@
                 font-size: 2rem;
             }
             
-            .logo-icon {
-                font-size: 3rem;
+            .logo-image {
+                width: 70px;
+                height: 70px;
             }
             
             .option-card {
@@ -483,7 +496,8 @@
         
         <header>
             <div class="logo">
-                <i class="fas fa-calculator logo-icon"></i>
+                <!-- 修改为SVG Logo -->
+                <img src="./logo.svg" alt="Factor Game Logo" class="logo-image">
                 <h1 id="mainTitle">Factor Game</h1>
             </div>
             <p class="subtitle" id="subtitle">A Mathematical Strategy Game Based on Number Factors</p>
@@ -624,37 +638,37 @@
             updateContent();
         });
         
-// 打开README模态框
-readmeBtn.addEventListener('click', function() {
-    // 显示模态框
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    
-    // 显示加载状态
-    readmeContent.textContent = currentLang === 'en' 
-        ? 'Loading documentation...' 
-        : '正在加载文档...';
-    
-    // 从README.txt文件中读取内容
-    fetch('./README.txt')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text();
-        })
-        .then(text => {
-            // 成功读取文件后显示内容
-            readmeContent.textContent = text;
-        })
-        .catch(error => {
-            // 如果读取失败，显示错误信息
-            console.error('Error fetching README:', error);
+        // 打开README模态框
+        readmeBtn.addEventListener('click', function() {
+            // 显示模态框
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            // 显示加载状态
             readmeContent.textContent = currentLang === 'en' 
-                ? 'Failed to load documentation. Please check the README.txt file.' 
-                : '加载文档失败。请检查README.txt文件。';
+                ? 'Loading documentation...' 
+                : '正在加载文档...';
+            
+            // 从README.txt文件中读取内容
+            fetch('./README.txt')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    // 成功读取文件后显示内容
+                    readmeContent.textContent = text;
+                })
+                .catch(error => {
+                    // 如果读取失败，显示错误信息
+                    console.error('Error fetching README:', error);
+                    readmeContent.textContent = currentLang === 'en' 
+                        ? 'Failed to load documentation. Please check the README.txt file.' 
+                        : '加载文档失败。请检查README.txt文件。';
+                });
         });
-    });
         
         // 关闭模态框
         closeModalBtn.addEventListener('click', function() {
